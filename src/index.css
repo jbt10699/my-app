@@ -28,11 +28,15 @@
 
 .intro{
   position: relative;
-  top: 90px;
+  top: 120px;
   border-bottom: 1px solid rgb(0, 149, 255);
   text-align: center;
   margin-left: 30%;
   margin-right: 30%;
+}
+
+.intro_text{
+  font-size: x-large;
 }
 
 .intro_loader{
@@ -41,7 +45,7 @@
 
 .results_albums{
   position: relative;
-  top: 40px;
+  top: 120px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -50,7 +54,7 @@
 .albums_card{
   background-color: white;
   margin: 2%;
-  width: 80px;
+  width: 150px;
   text-align: center;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
 }
@@ -64,9 +68,7 @@
   max-width: 90%;
 }
 
-.album_name, .album_copyright{
-  font-size: 50%;
-}
+
 .album_copyright{
   font-style: italic;
 }
