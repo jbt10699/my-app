@@ -15,30 +15,35 @@ export default class App extends React.Component {
 
 
     search() {
-        console.log("Searching for ", this.state.term);
-        this.setState({showLoading: true})
-        fetch(`https://itunes.apple.com/search?term=${this.state.term}&media=music&entity=album&attribute=artistTerm&limit=200`)
-            .then((response) => response.json())
-            .then((json) => {
-                this.setState({
-                    albumList: json.results,
-                    loaded: true,
-                    introText: "Found " + json.resultCount + " results for " + this.state.term,
-                    showLoading: false
-                })
-                console.log("Num results ", json.resultCount)
-            }
-            );
+        if (this.state.term === "") {
+            alert("Please enter a search term");
+        }
+        else {
+            console.log("Searching for ", this.state.term);
+            //Show loading symbol
+            this.setState({ showLoading: true })
+            fetch(`https://itunes.apple.com/search?term=${this.state.term}&media=music&entity=album&attribute=artistTerm&limit=200`)
+                .then((response) => response.json())
+                .then((json) => {
+                    this.setState({
+                        albumList: json.results,
+                        //change intro text
+                        introText: "Found " + json.resultCount + " results for " + this.state.term,
+                        //Hide loading symbol
+                        showLoading: false
+                    })
+                }
+                );
+        }
     }
 
     checkEnter(e) {
+        //Check if user presses enter on every keystroke
         this.setState({ term: e.target.value })
         if (e.key === "Enter") {
             this.search();
         }
     }
-
-    setTerm
 
     render() {
         return (
@@ -78,9 +83,9 @@ export default class App extends React.Component {
                     <div className="results_albums">
                         {this.state.albumList.map((album) => (
                             <div className="albums_card">
-                                    <img className="album_art" src={album.artworkUrl100} alt="album art"/>
-                                    <p className="album_name">{album.collectionName}</p>
-                                    <p className="album_copyright">{album.copyright}</p>
+                                <img className="album_art" src={album.artworkUrl100} alt="album art" />
+                                <p className="album_name">{album.collectionName}</p>
+                                <p className="album_copyright">{album.copyright}</p>
                             </div>
                         ))}
                     </div>
