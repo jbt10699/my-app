@@ -68,7 +68,11 @@
   max-width: 90%;
 }
 
+.album_name{
+  font-size: 100%;
+}
 
 .album_copyright{
   font-style: italic;
+  font-size: 70%;
 }

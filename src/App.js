@@ -7,22 +7,24 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             albumList: [],
-            artistName: "",
-            loaded: false,
+            term: "",
+            showLoading: false,
             introText: "Search for Albums by Artist"
         }
     }
 
 
     search() {
-        console.log("Searching for ", this.state.artistName);
-        fetch(`https://itunes.apple.com/search?term=${this.state.artistName}&media=music&entity=album&attribute=artistTerm&limit=200`)
+        console.log("Searching for ", this.state.term);
+        this.setState({showLoading: true})
+        fetch(`https://itunes.apple.com/search?term=${this.state.term}&media=music&entity=album&attribute=artistTerm&limit=200`)
             .then((response) => response.json())
             .then((json) => {
                 this.setState({
                     albumList: json.results,
                     loaded: true,
-                    introText: "Found " + json.resultCount + " results"
+                    introText: "Found " + json.resultCount + " results for " + this.state.term,
+                    showLoading: false
                 })
                 console.log("Num results ", json.resultCount)
             }
@@ -30,7 +32,7 @@ export default class App extends React.Component {
     }
 
     checkEnter(e) {
-        this.setState({ artistName: e.target.value })
+        this.setState({ term: e.target.value })
         if (e.key === "Enter") {
             this.search();
         }
@@ -69,6 +71,8 @@ export default class App extends React.Component {
                     <div className="intro">
                         <h6 className="intro_text">{this.state.introText}</h6>
                         <img className="intro_loader" alt='loader' src="loader.gif" height="20" width="20"></img>
+                        {this.state.showLoading ? <img id='loading-img' src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" alt="loading-gif" /> : <></>}
+
                     </div>
                     {/*Albums load here*/}
                     <div className="results_albums">
